@@ -15,7 +15,7 @@ public class ImageService implements IImageService{
     @Override
     public Image addImage(AddImageRequest request) {
 
-
+        return null;
     }
 
     @Override
