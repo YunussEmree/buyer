@@ -1,15 +1,17 @@
-package com.YunussEmree.buyme.model;
+package com.YunussEmree.buyme.product;
 
+import com.YunussEmree.buyme.category.Category;
+import com.YunussEmree.buyme.image.Image;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Product {
@@ -22,6 +24,16 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private int inventory;
+
+    public Product(String name, String description, String brand, BigDecimal price, int inventory, Category category) {
+        this.name = name;
+        this.description = description;
+        this.brand = brand;
+        this.price = price;
+        this.inventory = inventory;
+        this.category = category;
+    }
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
