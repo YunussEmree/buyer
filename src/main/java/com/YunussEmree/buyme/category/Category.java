@@ -17,10 +17,6 @@ import java.util.List;
 @Entity
 public class Category {
 
-    public Category(String name){
-        this.name = name;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,8 +24,11 @@ public class Category {
     private String description;
     private BigDecimal price;
     private int inventory;
-
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+    public Category(String name) {
+        this.name = name;
+    }
 
 }
