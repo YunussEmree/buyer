@@ -1,9 +1,10 @@
 package com.YunussEmree.buyme.product;
 
-import com.YunussEmree.buyme.core.utilities.exceptions.ProductNotFoundException;
-import com.YunussEmree.buyme.core.utilities.mappers.IModelMapperManager;
 import com.YunussEmree.buyme.category.Category;
 import com.YunussEmree.buyme.category.CategoryRepository;
+import com.YunussEmree.buyme.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.YunussEmree.buyme.core.utilities.exceptions.ResourceNotFoundException;
+import com.YunussEmree.buyme.core.utilities.mappers.IModelMapperManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,51 +21,44 @@ public class ProductService implements IProductService {
 
 
     @Override
-    public Product addProduct(AddProductRequest request) {
+    public void addProduct(Product product) {
         //check the category, is it found in DB?
         // If yes, set it as the new product category
         // If no, then save it as a new category
         //Then set a new product
+        Category category = categoryRepository.findByName(product.getCategory().getName());
 
-        Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
-                .orElseGet(() -> {
-                    Category newCategory = new Category(request.getCategory().getName());
-                    return categoryRepository.save(newCategory);
-    });
-        request.setCategory(category);
-        return productRepository.save(createProduct(request, category));
-    }
+        Optional.of(category).ifPresentOrElse(product::setCategory, () -> {
+            Category newCategory = new Category();
+            newCategory.setName(product.getCategory().getName());
+            product.setCategory(categoryRepository.save(newCategory));
+        });
 
-    private Product createProduct(AddProductRequest request, Category category){
-        return new Product(
-                request.getName(),
-                request.getDescription(),
-                request.getBrand(),
-                request.getPrice(),
-                request.getInventory(),
-                category
-        );
+        Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
+                .map(productRepository::save)
+                .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists!"));
     }
 
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
-                .ifPresentOrElse(productRepository::delete, () -> {throw new ProductNotFoundException("Product not found!");});
+                .ifPresentOrElse(productRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Product not found!");
+                });
     }
 
     @Override
-    public void updateProduct(Product product, Long productId) {
-        productRepository.findById(productId).ifPresentOrElse(productRepository::save, () -> {throw new ProductNotFoundException("Product not found!");});
-    }
-
-    private Product updateExistingProduct(ProductUpdateRequest request){
-        return iModelMapperManager.forRequest().map(request, Product.class);
+    public void updateProduct(Product product, Long id) {
+        Optional.ofNullable(getProductById(id)).map(oldProduct -> {
+            oldProduct.setName(oldProduct.getName());
+            return productRepository.save(oldProduct);
+        }).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
@@ -84,12 +78,12 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return productRepository.findByCategoryAndBrand(category,brand);
+        return productRepository.findByCategoryAndBrand(category, brand);
     }
 
     @Override
     public List<Product> getProductsByBrandAndName(String brand, String name) {
-        return productRepository.findByBrandAndName(brand,name);
+        return productRepository.findByBrandAndName(brand, name);
     }
 
     @Override
