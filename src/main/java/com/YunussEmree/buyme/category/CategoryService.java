@@ -1,30 +1,59 @@
 package com.YunussEmree.buyme.category;
 
+import com.YunussEmree.buyme.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.YunussEmree.buyme.core.utilities.exceptions.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
-public class CategoryService implements ICategoryService{
-    @Override
-    public Category addCategory(AddCategoryRequest request) {
-        return null;
-    }
+@Service
+@RequiredArgsConstructor
+public class CategoryService implements ICategoryService {
 
-    @Override
-    public void deleteCategoryById(Long id) {
+    private CategoryRepository categoryRepository;
 
-    }
 
     @Override
-    public void updateCategory(Category category, Long categoryId) {
-
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
     }
 
     @Override
     public Category getCategoryById(Long id) {
-        return null;
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
     }
+
 
     @Override
     public List<Category> getAllCategories() {
-        return List.of();
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category addCategory(Category category) {
+        return Optional.of(category).filter(c -> !categoryRepository.existByName(c.getName()))
+                .map(categoryRepository::save).orElseThrow(() -> new ResourceAlreadyExistsException("Category already exists!"));
+    }
+
+    //Optional.of(foobar);         // May throw NullPointerException
+    //Optional.ofNullable(foobar); // Safe from NullPointerException
+
+    @Override
+    public Category updateCategory(Category category, Long id) {
+        return Optional.ofNullable(getCategoryById(id)).map(oldCategory -> {
+            oldCategory.setName(oldCategory.getName());
+            return categoryRepository.save(oldCategory);
+        }).orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
+    }
+
+    @Override
+    public void deleteCategoryById(Long id) {
+        categoryRepository.findById(id).ifPresentOrElse(categoryRepository::delete,
+                () -> {
+                    throw new ResourceNotFoundException("Category not found!");
+                });
     }
 }
