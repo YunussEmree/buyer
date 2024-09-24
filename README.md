@@ -15,7 +15,7 @@ Domain Driven Design for much more code understanding
 <p> /api/v1/categories         -    POST Request   -   Create a new category</p>
 <p> /api/v1/categories/{id}    -    PUT Request    -   Update category by id</p>
 <p> /api/v1/categories/{id}    -    DELETE Request -   Delete category by id</p>
-
+<p> </p>
 <p> /api/v1/products         -    GET Request    -   Get all products</p>
 <p> /api/v1/products/{id}    -    GET Request    -   Get product by id</p>
 <p> /api/v1/products         -    POST Request   -   Create a new product</p>
