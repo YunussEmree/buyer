@@ -3,6 +3,7 @@ package com.YunussEmree.buyme.controllers;
 import com.YunussEmree.buyme.category.Category;
 import com.YunussEmree.buyme.category.ICategoryService;
 import com.YunussEmree.buyme.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.YunussEmree.buyme.core.utilities.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 public class CategoryController {
     private final ICategoryService categoryService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<ApiResponse> getAllCategories(){
         try{
             List<Category> categories = categoryService.getAllCategories();
@@ -49,13 +50,24 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.updateCategory(category, id);
+    public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        try {
+            Category theCategory = categoryService.updateCategory(category, id);
+            return ResponseEntity.ok(new ApiResponse("Success", theCategory));
+        }
+        catch(ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategoryById(id);
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Long id) {
+        try {
+            categoryService.deleteCategoryById(id);
+            return ResponseEntity.ok(new ApiResponse("Success", null));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
+        }
     }
 
 
