@@ -2,17 +2,20 @@ package com.YunussEmree.buyer.controllers;
 
 import com.YunussEmree.buyer.product.IProductService;
 import com.YunussEmree.buyer.product.Product;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("${api.prefix}/products")
-@RequiredArgsConstructor
 public class ProductController {
     IProductService productService;
 
+    @Autowired
+    public ProductController(IProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public List<Product> getProducts() {
