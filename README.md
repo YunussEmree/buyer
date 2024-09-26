@@ -1,4 +1,4 @@
-# buyme
+# buyer
 A fullstack shopping card project with Spring Boot + Reactjs
 
 # Used Technologies
