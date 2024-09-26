@@ -4,7 +4,7 @@ import com.YunussEmree.buyer.category.Category;
 import com.YunussEmree.buyer.category.ICategoryService;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${api.prefix}/categories")
-@RequiredArgsConstructor
 public class CategoryController {
     private final ICategoryService categoryService;
+
+    @Autowired
+    public CategoryController(ICategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
 
     @GetMapping
     public ResponseEntity<ApiResponse> getAllCategories(){

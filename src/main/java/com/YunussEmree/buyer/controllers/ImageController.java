@@ -4,6 +4,7 @@ import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException
 import com.YunussEmree.buyer.image.IImageService;
 import com.YunussEmree.buyer.image.Image;
 import com.YunussEmree.buyer.image.ImageDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class ImageController {
     private final IImageService imageService;
 
+
+    @Autowired
     public ImageController(IImageService imageService) {
         this.imageService = imageService;
     }
