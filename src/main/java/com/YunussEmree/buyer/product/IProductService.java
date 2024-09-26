@@ -3,11 +3,11 @@ package com.YunussEmree.buyer.product;
 import java.util.List;
 
 public interface IProductService {
-    void addProduct(Product product);
+    Product addProduct(Product product);
 
     void deleteProductById(Long id);
 
-    void updateProduct(Product product, Long productId);
+    Product updateProduct(Product product, Long productId);
 
     Product getProductById(Long id);
 

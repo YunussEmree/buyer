@@ -1,8 +1,11 @@
 package com.YunussEmree.buyer.controllers;
 
+import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.YunussEmree.buyer.product.IProductService;
 import com.YunussEmree.buyer.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,27 +21,53 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<ApiResponse> getProducts() {
+        try{
+            List<Product> products = productService.getAllProducts();
+            return ResponseEntity.ok(new ApiResponse("Success", products));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+        }
+
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id) {
+        try{
+            Product product = productService.getProductById(id);
+            return ResponseEntity.ok(new ApiResponse("Success", product));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+        }
     }
 
     @PostMapping
-    public void createProduct(@RequestBody Product product) {
-        productService.addProduct(product); //TODO Should I use a DTO here?
+    public ResponseEntity<ApiResponse> createProduct(@RequestBody Product product) {
+        try{
+            Product theProduct = productService.addProduct(product); //TODO Will be used DTO
+            return ResponseEntity.ok(new ApiResponse("Success", theProduct));
+        } catch (ResourceAlreadyExistsException e){
+            return ResponseEntity.status(409).body(new ApiResponse("Failed", null));
+        }
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        productService.updateProduct(product, id);
+    public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        try{
+            productService.updateProduct(product, id);
+            return ResponseEntity.ok(new ApiResponse("Success", product));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProductById(id);
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
+        try{
+            productService.deleteProductById(id);
+            return ResponseEntity.ok(new ApiResponse("Success", null));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+        }
     }
 }
