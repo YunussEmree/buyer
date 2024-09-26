@@ -21,7 +21,7 @@ public class ProductService implements IProductService {
 
 
     @Override
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         //check the category, is it found in DB?
         // If yes, set it as the new product category
         // If no, then save it as a new category
@@ -37,6 +37,8 @@ public class ProductService implements IProductService {
         Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
                 .map(productRepository::save)
                 .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists!"));
+
+        return product;
     }
 
     @Override
@@ -54,11 +56,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void updateProduct(Product product, Long id) {
+    public Product updateProduct(Product product, Long id) {
         Optional.ofNullable(getProductById(id)).map(oldProduct -> {
             oldProduct.setName(oldProduct.getName());
             return productRepository.save(oldProduct);
         }).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        return product;
     }
 
     @Override
