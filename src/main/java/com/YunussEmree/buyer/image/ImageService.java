@@ -3,7 +3,6 @@ package com.YunussEmree.buyer.image;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.YunussEmree.buyer.product.IProductService;
 import com.YunussEmree.buyer.product.Product;
-import com.YunussEmree.buyer.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
