@@ -4,6 +4,7 @@ import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException
 import com.YunussEmree.buyer.image.IImageService;
 import com.YunussEmree.buyer.image.Image;
 import com.YunussEmree.buyer.image.ImageDto;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -40,7 +41,9 @@ public class ImageController {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Upload failed!", e.getMessage()));
         }
     }
+
     @GetMapping("/{imageId}")
+    @Transactional
     public ResponseEntity<Resource> downloadImage(@PathVariable("imageId") Long imageId) throws SQLException {
         Image image = imageService.getImageById(imageId);
         ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
