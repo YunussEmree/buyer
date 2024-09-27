@@ -3,7 +3,6 @@ package com.YunussEmree.buyer.image;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.YunussEmree.buyer.product.IProductService;
 import com.YunussEmree.buyer.product.Product;
-import com.YunussEmree.buyer.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,11 +19,10 @@ public class ImageService implements IImageService {
 
     private final ImageRepository imageRepository;
     private final IProductService iProductService;
-    private final ProductService productService;
 
     @Override
     public List<ImageDto> addImages(List<MultipartFile> files, Long productId) {
-        Product product = productService.getProductById(productId);
+        Product product = iProductService.getProductById(productId);
         List<ImageDto> savedImageDto = new ArrayList<>();
 
         for (MultipartFile file : files) {
