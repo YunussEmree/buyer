@@ -22,16 +22,21 @@ public class ProductService implements IProductService {
 
     @Override
     public Product addProduct(Product product) {
+        System.out.println("Product :" + product);
         //check the category, is it found in DB?
         // If yes, set it as the new product category
         // If no, then save it as a new category
         //Then set a new product
-        Category category = categoryRepository.findByName(product.getCategory().getName());
 
-        Optional.of(category).ifPresentOrElse(product::setCategory, () -> {
+
+
+        Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName())).ifPresentOrElse(product::setCategory, () -> {
+            System.out.println("line 35 :");
             Category newCategory = new Category();
             newCategory.setName(product.getCategory().getName());
+            System.out.println("newCategory :" + newCategory);
             product.setCategory(categoryRepository.save(newCategory));
+            System.out.println("edited product :" + product);
         });
 
         Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
