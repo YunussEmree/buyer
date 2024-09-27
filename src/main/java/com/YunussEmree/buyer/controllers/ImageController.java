@@ -31,26 +31,26 @@ public class ImageController {
     }
 
 
-    @PostMapping("/images")
-    public ResponseEntity<ApiResponse> saveImages(@RequestParam List<MultipartFile> files, @RequestParam Long productId) {
+    @PostMapping
+    public ResponseEntity<ApiResponse> saveImages(@RequestBody List<MultipartFile> files, @RequestParam("productId") Long productId) {
         try {
             List<ImageDto> imageDtos = imageService.addImages(files, productId);
-            return ResponseEntity.ok(new ApiResponse("Upload succes!", imageDtos));
+            return ResponseEntity.ok(new ApiResponse("Upload success!", imageDtos));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Upload failed!", e.getMessage()));
         }
     }
-    @GetMapping("/images/{imageId}")
-    public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId) throws SQLException {
+    @GetMapping("/{imageId}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable("imageId") Long imageId) throws SQLException {
         Image image = imageService.getImageById(imageId);
-        ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1L, (int) image.getImage().length()));
+        ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(image.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFileName() + "\"")
                 .body(resource);
     }
 
-    @PutMapping("/images/{imageId}")
-    public ResponseEntity<ApiResponse> updateImage(@PathVariable Long imageId, @RequestBody MultipartFile file) {
+    @PutMapping("/{imageId}")
+    public ResponseEntity<ApiResponse> updateImage(@PathVariable Long imageId, @RequestParam("file") MultipartFile file) {
         try {
             Image image = imageService.getImageById(imageId);
             if (image != null) {
@@ -63,14 +63,14 @@ public class ImageController {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Update failed!", INTERNAL_SERVER_ERROR));
     }
 
-    @DeleteMapping("/delete/{imageId}")
+    @DeleteMapping("/{imageId}")
     public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId) {
-        try{
-        Image image = imageService.getImageById(imageId);
-        if(image != null){
-            imageService.deleteImageById(imageId);
-            return ResponseEntity.ok(new ApiResponse("Delete success!", null));
-        }
+        try {
+            Image image = imageService.getImageById(imageId);
+            if (image != null) {
+                imageService.deleteImageById(imageId);
+                return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+            }
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
