@@ -3,6 +3,7 @@ package com.YunussEmree.buyer.category;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.Optional;
 public class CategoryService implements ICategoryService {
 
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
 
     @Override
