@@ -5,5 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
-public record CategoryDto(Long id, String name, @JsonIgnore List<Product> products) {
+public class CategoryDto {  //Todo change to record
+    private Long id;
+    private String name;
+    @JsonIgnore
+    private List<Product> products;
 }

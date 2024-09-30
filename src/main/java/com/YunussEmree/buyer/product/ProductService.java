@@ -4,8 +4,11 @@ import com.YunussEmree.buyer.category.Category;
 import com.YunussEmree.buyer.category.CategoryRepository;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.core.utilities.mappers.IModelMapperManager;
+import com.YunussEmree.buyer.image.Image;
+import com.YunussEmree.buyer.image.ImageDto;
+import com.YunussEmree.buyer.image.ImageRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,8 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final IModelMapperManager iModelMapperManager;
+    private final ModelMapper modelMapper;
+    private final ImageRepository imageRepository;
 
 
     @Override
@@ -97,5 +101,20 @@ public class ProductService implements IProductService {
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+    }
+
+
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public ProductDto convertToDto(Product product) {
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream().map(image -> modelMapper.map(image, ImageDto.class)).toList();
+        productDto.setImages(imageDtos);
+        return productDto;
     }
 }
