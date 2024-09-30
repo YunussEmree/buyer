@@ -12,8 +12,4 @@ public class BuyerApplication {
         SpringApplication.run(BuyerApplication.class, args);
     }
 
-    @Bean public ModelMapper getModelMapper() {
-        return new ModelMapper();
-    }
-
 }
