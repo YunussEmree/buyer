@@ -1,4 +1,10 @@
 package com.YunussEmree.buyer.image;
 
-public record ImageDto(Long imageId, String imageName, String downloadUrl) {
+import lombok.Data;
+
+@Data
+public class ImageDto {  //Todo change to record
+    private Long id;
+    private String fileName;
+    private String downloadUrl;
 }
