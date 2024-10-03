@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class CartService implements ICartService{
 
     private CartRepository cartRepository;
