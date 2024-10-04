@@ -3,13 +3,9 @@ package com.YunussEmree.buyer.cart;
 import com.YunussEmree.buyer.controllers.ApiResponse;
 import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping("${api.prefix}/cart")
@@ -20,7 +16,7 @@ public class CartController {
         this.iCartService = iCartService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/my-cart")
     public ResponseEntity<ApiResponse> getCart(@PathVariable Long id) {
         try {
             Cart cart = iCartService.getCart(id);
@@ -32,7 +28,7 @@ public class CartController {
         }
     }
 
-    @GetMapping("/clear/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> clearCart(@PathVariable Long id) {
         try {
             iCartService.clearCart(id);
