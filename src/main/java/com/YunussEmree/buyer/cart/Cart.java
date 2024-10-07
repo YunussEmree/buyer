@@ -38,6 +38,23 @@ public class Cart {
         this.totalAmount = this.totalAmount.subtract(new BigDecimal(item.getQuantity()));
     }
 
+    public void calculateTotalPrice() {
+        setTotalPrice(this.getItems()
+                .stream().map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+    }
+
+    public void calculateTotalAmount() {
+        setTotalAmount(BigDecimal.valueOf(this.getItems()
+                .stream().map(CartItem::getQuantity)
+                .reduce(0, Integer::sum)));
+    }
+
+
+
+
+
+
 
 
 }

@@ -72,6 +72,10 @@ public class CartItemService implements ICartItemService {
                 .findFirst().orElseThrow(() -> new ResourceNotFoundException("Product not found in cart!"));
         cartItem.setQuantity(quantity);
         cartItem.setTotalPrice();
+
+        cart.calculateTotalPrice();
+        cart.calculateTotalAmount();
+
         cartItemRepository.save(cartItem);
 
     }

@@ -47,7 +47,7 @@ public class CartItemController {
         }
     }
 
-    @GetMapping
+    @PatchMapping
     public ResponseEntity<ApiResponse> updateCartItemQuantity(@RequestParam Long cartId, @RequestParam Long productId, @RequestParam int quantity) {
         try{
             iCartItemService.updateCartItemQuantity(cartId, productId, quantity);
