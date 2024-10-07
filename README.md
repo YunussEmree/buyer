@@ -2,12 +2,12 @@
 A fullstack shopping card project with Spring Boot + Reactjs
 
 # Used Technologies
-Spring Boot Core
-Spring Boot Web
-Lombok 
-Spring Boot JPA
-Postgresql
-Domain Driven Design for much more code understanding
+Spring Boot Core <br>
+Spring Boot Web <br>
+Lombok <br>
+Spring Boot JPA <br>
+Postgresql <br>
+Domain Driven Design for much more code understanding <br>
 
 # Api Endpoints
 <p> /api/v1/categories             -    GET Request    -   Get all categories</p>
