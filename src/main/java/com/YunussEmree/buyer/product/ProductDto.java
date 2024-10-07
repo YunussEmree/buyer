@@ -1,8 +1,7 @@
-package com.YunussEmree.buyer.product;
+package com.yunussemree.buyer.product;
 
-import com.YunussEmree.buyer.category.Category;
-import com.YunussEmree.buyer.image.ImageDto;
-import lombok.Data;
+import com.yunussemree.buyer.category.Category;
+import com.yunussemree.buyer.image.ImageDto;
 import lombok.Getter;
 import lombok.Setter;
 

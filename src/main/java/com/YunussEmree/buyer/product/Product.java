@@ -1,7 +1,7 @@
-package com.YunussEmree.buyer.product;
+package com.yunussemree.buyer.product;
 
-import com.YunussEmree.buyer.category.Category;
-import com.YunussEmree.buyer.image.Image;
+import com.yunussemree.buyer.category.Category;
+import com.yunussemree.buyer.image.Image;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

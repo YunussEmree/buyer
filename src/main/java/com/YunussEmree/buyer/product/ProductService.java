@@ -1,12 +1,12 @@
-package com.YunussEmree.buyer.product;
+package com.yunussemree.buyer.product;
 
-import com.YunussEmree.buyer.category.Category;
-import com.YunussEmree.buyer.category.CategoryRepository;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.image.Image;
-import com.YunussEmree.buyer.image.ImageDto;
-import com.YunussEmree.buyer.image.ImageRepository;
+import com.yunussemree.buyer.category.Category;
+import com.yunussemree.buyer.category.CategoryRepository;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.image.Image;
+import com.yunussemree.buyer.image.ImageDto;
+import com.yunussemree.buyer.image.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,6 @@ public class ProductService implements IProductService {
 
     @Override
     public Product addProduct(Product product) {
-        System.out.println("Product :" + product);
         //check the category, is it found in DB?
         // If yes, set it as the new product category
         // If no, then save it as a new category
@@ -35,32 +34,28 @@ public class ProductService implements IProductService {
 
 
         Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName())).ifPresentOrElse(product::setCategory, () -> {
-            System.out.println("line 35 :");
             Category newCategory = new Category();
             newCategory.setName(product.getCategory().getName());
-            System.out.println("newCategory :" + newCategory);
             product.setCategory(categoryRepository.save(newCategory));
-            System.out.println("edited product :" + product);
         });
 
         Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
                 .map(productRepository::save)
-                .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists!"));
-
+                .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists when add product by id service!"));
         return product;
     }
 
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found when get product by id service!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
                 .ifPresentOrElse(productRepository::delete, () -> {
-                    throw new ResourceNotFoundException("Product not found!");
+                    throw new ResourceNotFoundException("Product not found when delete product by id service!");
                 });
     }
 
@@ -69,7 +64,7 @@ public class ProductService implements IProductService {
         Optional.ofNullable(getProductById(id)).map(oldProduct -> {
             oldProduct.setName(oldProduct.getName());
             return productRepository.save(oldProduct);
-        }).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Product not found when update product service!"));
         return product;
     }
 

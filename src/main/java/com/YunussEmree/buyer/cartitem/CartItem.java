@@ -1,7 +1,8 @@
-package com.YunussEmree.buyer.cartitem;
+package com.yunussemree.buyer.cartitem;
 
-import com.YunussEmree.buyer.cart.Cart;
-import com.YunussEmree.buyer.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yunussemree.buyer.cart.Cart;
+import com.yunussemree.buyer.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,9 @@ public class CartItem {
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "cart_id")
+    @JsonIgnore
     private Cart cart;
 
     @ManyToOne

@@ -1,6 +1,6 @@
-package com.YunussEmree.buyer.category;
+package com.yunussemree.buyer.category;
 
-import com.YunussEmree.buyer.product.Product;
+import com.yunussemree.buyer.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;

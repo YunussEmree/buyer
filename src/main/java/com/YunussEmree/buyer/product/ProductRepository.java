@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.product;
+package com.yunussemree.buyer.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

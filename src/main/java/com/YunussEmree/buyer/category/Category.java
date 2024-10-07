@@ -1,14 +1,12 @@
-package com.YunussEmree.buyer.category;
+package com.yunussemree.buyer.category;
 
-import com.YunussEmree.buyer.product.Product;
+import com.yunussemree.buyer.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter

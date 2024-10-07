@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.cartitem;
+package com.yunussemree.buyer.cartitem;
 
 public interface ICartItemService {
 

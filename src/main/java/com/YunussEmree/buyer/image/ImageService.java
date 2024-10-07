@@ -1,8 +1,9 @@
-package com.YunussEmree.buyer.image;
+package com.yunussemree.buyer.image;
 
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.product.IProductService;
-import com.YunussEmree.buyer.product.Product;
+import com.yunussemree.buyer.core.utilities.exceptions.ImageException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.product.IProductService;
+import com.yunussemree.buyer.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ public class ImageService implements IImageService {
                 Image image = new Image();
                 image.setFileName(file.getOriginalFilename());
                 image.setFileType(file.getContentType());
-                image.setImage(new SerialBlob(file.getBytes()));
+                image.setBlob(new SerialBlob(file.getBytes()));
                 image.setProduct(product);
 
                 Image savedImage = imageRepository.save(image);
@@ -49,7 +50,7 @@ public class ImageService implements IImageService {
                 savedImageDto.add(imageDto);
 
             } catch (IOException | SQLException e) {
-                throw new RuntimeException(e.getMessage());
+                throw new ImageException(e.getMessage());
             }
         }
         return savedImageDto;
@@ -70,10 +71,10 @@ public class ImageService implements IImageService {
         try {
             image.setFileName(file.getOriginalFilename());
 
-            image.setImage(new SerialBlob(file.getBytes()));
+            image.setBlob(new SerialBlob(file.getBytes()));
             imageRepository.save(image);
         } catch (IOException | SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ImageException(e.getMessage());
         }
     }
 

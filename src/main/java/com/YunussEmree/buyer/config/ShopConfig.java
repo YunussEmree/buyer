@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.config;
+package com.yunussemree.buyer.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
