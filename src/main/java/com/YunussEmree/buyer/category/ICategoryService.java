@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.category;
+package com.yunussemree.buyer.category;
 
 import java.util.List;
 

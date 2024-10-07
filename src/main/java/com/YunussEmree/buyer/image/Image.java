@@ -1,6 +1,6 @@
-package com.YunussEmree.buyer.image;
+package com.yunussemree.buyer.image;
 
-import com.YunussEmree.buyer.product.Product;
+import com.yunussemree.buyer.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class Image {
 
     @Lob // refers to a variable length datatype for storing large objects
     @JsonIgnore
-    private Blob image;
+    private Blob blob;
     private String downloadUrl;
 
     @ManyToOne

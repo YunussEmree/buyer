@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.cart;
+package com.yunussemree.buyer.cart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

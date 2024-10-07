@@ -8,6 +8,7 @@ class BuymeApplicationTests {
 
 	@Test
 	void contextLoads() {
+		//No test is written for now
 	}
 
 }

@@ -1,10 +1,10 @@
-package com.YunussEmree.buyer.controllers;
+package com.yunussemree.buyer.controllers;
 
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.product.IProductService;
-import com.YunussEmree.buyer.product.Product;
-import com.YunussEmree.buyer.product.ProductDto;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.product.IProductService;
+import com.yunussemree.buyer.product.Product;
+import com.yunussemree.buyer.product.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +26,10 @@ public class ProductController {
         try{
             List<Product> products = productService.getAllProducts();
             List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
-            return ResponseEntity.ok(new ApiResponse("Success", convertedProducts));
+            return ResponseEntity.ok(new ApiResponse("Success for get products request", convertedProducts));
         } catch (ResourceNotFoundException e){
-            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+            return ResponseEntity.status(404).body(new ApiResponse("Resource not found when get products request", null));
         }
-
     }
 
     @GetMapping("/{id}")
@@ -38,9 +37,9 @@ public class ProductController {
         try{
             Product product = productService.getProductById(id);
             ProductDto productDto = productService.convertToDto(product);
-            return ResponseEntity.ok(new ApiResponse("Success", productDto));
+            return ResponseEntity.ok(new ApiResponse("Success when get product by id request", productDto));
         } catch (ResourceNotFoundException e){
-            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+            return ResponseEntity.status(404).body(new ApiResponse("Resource not found when get product by id request", null));
         }
     }
 
@@ -48,9 +47,9 @@ public class ProductController {
     public ResponseEntity<ApiResponse> createProduct(@RequestBody Product product) {
         try{
             Product theProduct = productService.addProduct(product); //TODO Will be used DTO
-            return ResponseEntity.ok(new ApiResponse("Success", theProduct));
+            return ResponseEntity.ok(new ApiResponse("Success for create product request", theProduct));
         } catch (ResourceAlreadyExistsException e){
-            return ResponseEntity.status(409).body(new ApiResponse("Failed", null));
+            return ResponseEntity.status(409).body(new ApiResponse("Resource already exists when create product request", null));
         }
     }
 
@@ -58,9 +57,9 @@ public class ProductController {
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         try{
             productService.updateProduct(product, id);
-            return ResponseEntity.ok(new ApiResponse("Success", product));
+            return ResponseEntity.ok(new ApiResponse("Success for update product request", product));
         } catch (ResourceNotFoundException e){
-            return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
+            return ResponseEntity.status(404).body(new ApiResponse("Resource not found in ", null));
         }
     }
 
@@ -68,7 +67,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         try{
             productService.deleteProductById(id);
-            return ResponseEntity.ok(new ApiResponse("Success", null));
+            return ResponseEntity.ok(new ApiResponse("Success for delete product request", null));
         } catch (ResourceNotFoundException e){
             return ResponseEntity.status(404).body(new ApiResponse("Failed", null));
         }

@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.image;
+package com.yunussemree.buyer.image;
 
 import lombok.Data;
 

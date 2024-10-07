@@ -1,9 +1,9 @@
-package com.YunussEmree.buyer.controllers;
+package com.yunussemree.buyer.controllers;
 
-import com.YunussEmree.buyer.category.Category;
-import com.YunussEmree.buyer.category.ICategoryService;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.category.Category;
+import com.yunussemree.buyer.category.ICategoryService;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> getAllCategories(){
         try{
             List<Category> categories = categoryService.getAllCategories();
-            return ResponseEntity.ok(new ApiResponse("Success", categories));
+            return ResponseEntity.ok(new ApiResponse("Success for get all categories request", categories));
         } catch (Exception e){
             return ResponseEntity.status(500).body(new ApiResponse("Failed", e.getMessage()));
         }
@@ -36,7 +36,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long id) {
         try{
             Category category = categoryService.getCategoryById(id);
-            return ResponseEntity.ok(new ApiResponse("Success", category));
+            return ResponseEntity.ok(new ApiResponse("Success for get category by id request", category));
         } catch (Exception e){
             return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
         }
@@ -47,7 +47,7 @@ public class CategoryController {
         try{
 
             Category theCategory = categoryService.addCategory(category);
-            return ResponseEntity.ok(new ApiResponse("Success", theCategory));
+            return ResponseEntity.ok(new ApiResponse("Success for create category request", theCategory));
         } catch (ResourceAlreadyExistsException e){
             return ResponseEntity.status(409).body(new ApiResponse(e.getMessage(), null));
         }
@@ -58,7 +58,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         try {
             Category theCategory = categoryService.updateCategory(category, id);
-            return ResponseEntity.ok(new ApiResponse("Success", theCategory));
+            return ResponseEntity.ok(new ApiResponse("Success for update category request", theCategory));
         }
         catch(ResourceNotFoundException e){
             return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
@@ -69,7 +69,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Long id) {
         try {
             categoryService.deleteCategoryById(id);
-            return ResponseEntity.ok(new ApiResponse("Success", null));
+            return ResponseEntity.ok(new ApiResponse("Success for delete category request", null));
         } catch (ResourceNotFoundException e){
             return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
         }

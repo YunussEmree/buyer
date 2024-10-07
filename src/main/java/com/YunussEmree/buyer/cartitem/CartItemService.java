@@ -1,22 +1,29 @@
-package com.YunussEmree.buyer.cartitem;
+package com.yunussemree.buyer.cartitem;
 
-import com.YunussEmree.buyer.cart.Cart;
-import com.YunussEmree.buyer.cart.CartRepository;
-import com.YunussEmree.buyer.cart.ICartService;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.product.IProductService;
-import com.YunussEmree.buyer.product.Product;
-import lombok.RequiredArgsConstructor;
+import com.yunussemree.buyer.cart.Cart;
+import com.yunussemree.buyer.cart.CartRepository;
+import com.yunussemree.buyer.cart.ICartService;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.product.IProductService;
+import com.yunussemree.buyer.product.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class CartItemService implements ICartItemService {
 
     private final CartRepository cartRepository;
-    private CartItemRepository cartItemRepository;
-    private IProductService iProductService;
-    private ICartService iCartService;
+    private final CartItemRepository cartItemRepository;
+    private final IProductService iProductService;
+    private final ICartService iCartService;
+
+    @Autowired
+    public CartItemService(CartRepository cartRepository, CartItemRepository cartItemRepository, IProductService iProductService, ICartService iCartService) {
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
+        this.iProductService = iProductService;
+        this.iCartService = iCartService;
+    }
 
 
     @Override

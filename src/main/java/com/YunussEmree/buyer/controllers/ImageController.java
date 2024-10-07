@@ -1,9 +1,9 @@
-package com.YunussEmree.buyer.controllers;
+package com.yunussemree.buyer.controllers;
 
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.YunussEmree.buyer.image.IImageService;
-import com.YunussEmree.buyer.image.Image;
-import com.YunussEmree.buyer.image.ImageDto;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.image.IImageService;
+import com.yunussemree.buyer.image.Image;
+import com.yunussemree.buyer.image.ImageDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -46,7 +46,7 @@ public class ImageController {
     @Transactional
     public ResponseEntity<Resource> downloadImage(@PathVariable("imageId") Long imageId) throws SQLException {
         Image image = imageService.getImageById(imageId);
-        ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
+        ByteArrayResource resource = new ByteArrayResource(image.getBlob().getBytes(1, (int) image.getBlob().length()));
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(image.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFileName() + "\"")
                 .body(resource);

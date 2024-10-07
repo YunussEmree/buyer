@@ -1,7 +1,7 @@
-package com.YunussEmree.buyer.category;
+package com.yunussemree.buyer.category;
 
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
-import com.YunussEmree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found when get category by id request!"));
     }
 
 

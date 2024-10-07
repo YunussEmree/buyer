@@ -1,4 +1,4 @@
-package com.YunussEmree.buyer.core.utilities.exceptions;
+package com.yunussemree.buyer.core.utilities.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 
