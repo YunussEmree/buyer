@@ -39,10 +39,9 @@ public class ProductService implements IProductService {
             product.setCategory(categoryRepository.save(newCategory));
         });
 
-        Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
+        return Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
                 .map(productRepository::save)
                 .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists when add product by id service!"));
-        return product;
     }
 
     @Override
@@ -61,11 +60,10 @@ public class ProductService implements IProductService {
 
     @Override
     public Product updateProduct(Product product, Long id) {
-        Optional.ofNullable(getProductById(id)).map(oldProduct -> {
+        return Optional.ofNullable(getProductById(id)).map(oldProduct -> {
             oldProduct.setName(oldProduct.getName());
             return productRepository.save(oldProduct);
         }).orElseThrow(() -> new ResourceNotFoundException("Product not found when update product service!"));
-        return product;
     }
 
     @Override
