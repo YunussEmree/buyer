@@ -9,7 +9,7 @@ Spring Boot JPA
 Postgresql
 Domain Driven Design for much more code understanding
 
-# Api links
+# Api Endpoints
 <p> /api/v1/categories             -    GET Request    -   Get all categories</p>
 <p> /api/v1/categories/{id}        -    GET Request    -   Get category by id</p>
 <p> /api/v1/categories             -    POST Request   -   Create a new category</p>
@@ -28,6 +28,6 @@ Domain Driven Design for much more code understanding
 <p> /api/v1/images/{id}            -    DELETE Request -   Delete image by id</p>
 <br> 
 <p> /api/v1/cart/{id}/my-cart      -    GET Request    -   Get cart items</p>
-<p> /api/v1/cart/{id}/total-price  -    GET Request    -   Get total price of cart</p>
+<p> /api/v1/cart/1/totalPrice      -    GET Request    -   Get total price of cart</p>
 <p> /api/v1/cart/{id}              -    DELETE Request -   Clear cart</p>
 
