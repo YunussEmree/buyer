@@ -1,6 +1,7 @@
 package com.yunussemree.buyer.cart;
 
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class CartService implements ICartService{
         return cartRepository.save(cart);
     }
 
+
+    @Transactional // This annotation is used to ensure that the transaction is completed successfully.
     @Override
     public void clearCart(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found when clear cart service!"));
