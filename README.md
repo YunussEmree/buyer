@@ -28,6 +28,6 @@ Domain Driven Design for much more code understanding <br>
 <p> /api/v1/images/{id}            -    DELETE Request -   Delete image by id</p>
 <br> 
 <p> /api/v1/cart/{id}/my-cart      -    GET Request    -   Get cart items</p>
-<p> /api/v1/cart/1/totalPrice      -    GET Request    -   Get total price of cart</p>
+<p> /api/v1/cart/1/total-price      -    GET Request    -   Get total price of cart</p>
 <p> /api/v1/cart/{id}              -    DELETE Request -   Clear cart</p>
 
