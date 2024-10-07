@@ -74,6 +74,4 @@ public class CategoryController {
             return ResponseEntity.status(404).body(new ApiResponse(e.getMessage(), null));
         }
     }
-
-
 }
