@@ -1,13 +1,14 @@
 # buyer
 A fullstack shopping card project with Spring Boot + Reactjs
 
-# Used Technologies
+# Used Technologies, Designs and Principles
 Spring Boot Core <br>
 Spring Boot Web <br>
 Lombok <br>
 Spring Boot JPA <br>
 Postgresql <br>
 Domain Driven Design for much more code understanding <br>
+Clean Code Principles <br>
 
 # Api Endpoints
 <p> /api/v1/categories             -    GET Request    -   Get all categories</p>
