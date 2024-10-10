@@ -33,7 +33,7 @@ public class CartItemService implements ICartItemService {
         // Check if product is already in cart
         // If it is, update quantity
         // If it is not, add new cart item
-        Cart cart = iCartService.getCart(cartId);
+        Cart cart = iCartService.getCartById(cartId);
         Product product = iProductService.getProductById(productId);
         CartItem cartItem = cart.getItems().stream().filter(item ->
                 item.getProduct().getId().equals(productId))
@@ -55,7 +55,7 @@ public class CartItemService implements ICartItemService {
 
     @Override
     public void removeCartItem(Long cartId, Long productId) {
-        Cart cart = iCartService.getCart(cartId);
+        Cart cart = iCartService.getCartById(cartId);
         CartItem cartItem = cart.getItems().stream().filter(item ->
                 item.getProduct().getId().equals(productId))
                 .findFirst().orElseThrow(() -> new ResourceNotFoundException("Product not found in cart!"));
@@ -66,7 +66,7 @@ public class CartItemService implements ICartItemService {
 
     @Override
     public void updateCartItemQuantity(Long cartId, Long productId, int quantity) {
-        Cart cart = iCartService.getCart(cartId);
+        Cart cart = iCartService.getCartById(cartId);
         CartItem cartItem = cart.getItems().stream().filter(item ->
                 item.getProduct().getId().equals(productId))
                 .findFirst().orElseThrow(() -> new ResourceNotFoundException("Product not found in cart!"));

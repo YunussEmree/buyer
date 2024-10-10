@@ -22,7 +22,7 @@ public class CartController {
     @GetMapping("/{id}/my-cart")
     public ResponseEntity<ApiResponse> getCart(@PathVariable Long id) {
         try {
-            Cart cart = iCartService.getCart(id);
+            Cart cart = iCartService.getCartById(id);
             return ResponseEntity.ok(new ApiResponse("Cart retrieved successfully", cart));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(new ApiResponse("Cart not found for get cart request!", null));
