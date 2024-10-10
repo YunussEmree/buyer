@@ -1,32 +1,46 @@
 package com.yunussemree.buyer.user;
 
+import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Override
+    public User saveUser(CreateUserRequest request) {
+        return Optional.of(request).filter(user -> !userRepository.existsByEmail(user.getEmail()))
+                .map(user -> userRepository.save(User.builder()
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .password(user.getPassword())
+                        .build()))
+                .orElseThrow(() -> new ResourceNotFoundException("User already exists when save user service!"));
     }
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public User updateUser(UpdateUserRequest request, Long userId) {
+        return userRepository.findById(userId).map(user -> {
+            user.setFirstName(request.getFirstName());
+            user.setLastName(request.getLastName());
+            return userRepository.save(user);
+        }).orElseThrow(() -> new ResourceNotFoundException("User not found when update user service!"));
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public User getUserByName(String name) {
-        return userRepository.findByName(name);
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found when get user by id service!"));
     }
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        userRepository.findById(id).ifPresentOrElse(userRepository::delete, () -> {
+            throw new ResourceNotFoundException("User not found when delete user by id service!");
+        });
     }
 }
