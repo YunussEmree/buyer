@@ -35,3 +35,8 @@ Clean Code Principles <br>
 <p> /api/v1/cart-item                          -    PATCH Request  -   Update Cart Item Quantity</p>
 <p> /api/v1/cart-item                          -    POST  Request  -   Add Cart Item Quantity</p>
 <p> /api/v1/cart-item{cartId}/{productId}      -    Delete Request -   Remove Cart Item</p>
+<br>
+<p> /api/v1/orders/{userId}/all                -    GET Request    -   Get all orders of spesific user</p>
+<p> /api/v1/orders/{orderId}/all               -    GET Request    -   Get spesific order</p>
+<p> /api/v1/orders/{userId}                    -    POST  Request  -   Place order</p>
+<p> /api/v1/orders/{orderId}                   -    Delete Request -   Cancel the order</p>
