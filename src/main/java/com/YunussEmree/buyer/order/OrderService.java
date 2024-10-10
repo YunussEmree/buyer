@@ -7,8 +7,10 @@ import com.yunussemree.buyer.orderitem.OrderItem;
 import com.yunussemree.buyer.product.Product;
 import com.yunussemree.buyer.product.ProductRepository;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,13 +21,15 @@ public class OrderService implements IOrderService{
 
     private final ProductRepository productRepository;
     private final CartService cartService;
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, CartService cartService){
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, CartService cartService, ModelMapper modelMapper){
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.cartService = cartService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -68,9 +72,9 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found when get order by id service!"));
-    } //Todo will be continue
+    public OrderDto getOrderById(Long orderId) {
+        return orderRepository.findById(orderId).map(this::convertToDto).orElseThrow(() -> new ResourceNotFoundException("Order not found when get order by id service!"));
+    }
 
     @Override
     public void cancelOrder(Long orderId) {
@@ -80,7 +84,11 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public List<Order> getUserOrders(Long userId){
-        return orderRepository.findByUserId(userId);
+    public List<OrderDto> getUserOrders(Long userId){
+        return orderRepository.findAllByUserId(userId).stream().map(this::convertToDto).toList();
+    }
+
+    private OrderDto convertToDto(Order order){
+        return modelMapper.map(order, OrderDto.class);
     }
 }

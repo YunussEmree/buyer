@@ -20,7 +20,7 @@ public class UserService implements IUserService {
                         .email(user.getEmail())
                         .password(user.getPassword())
                         .build()))
-                .orElseThrow(() -> new ResourceNotFoundException("User already exists when save user service!"));
+                .orElseThrow(() -> new ResourceNotFoundException(request.getEmail() + " already exists in the system!"));
     }
 
     @Override
