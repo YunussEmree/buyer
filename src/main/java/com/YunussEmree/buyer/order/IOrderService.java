@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IOrderService {
     Order placeOrder(Long userId);
-    Order getOrderById(Long orderId);
+    OrderDto getOrderById(Long orderId);
     void cancelOrder(Long orderId);
-    List<Order> getUserOrders(Long userId);
+    List<OrderDto> getUserOrders(Long userId);
 }
