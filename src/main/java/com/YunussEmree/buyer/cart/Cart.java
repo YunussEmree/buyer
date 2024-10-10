@@ -1,6 +1,7 @@
 package com.yunussemree.buyer.cart;
 
 import com.yunussemree.buyer.cartitem.CartItem;
+import com.yunussemree.buyer.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,17 +39,25 @@ public class Cart {
         this.totalAmount = this.totalAmount.subtract(new BigDecimal(item.getQuantity()));
     }
 
-    public void calculateTotalPrice() {
-        setTotalPrice(this.getItems()
+    public BigDecimal calculateTotalPrice() {
+        BigDecimal newTotalPrice = this.getItems()
                 .stream().map(CartItem::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        setTotalPrice(newTotalPrice);
+        return newTotalPrice;
     }
 
-    public void calculateTotalAmount() {
-        setTotalAmount(BigDecimal.valueOf(this.getItems()
+    public BigDecimal calculateTotalAmount() {
+        BigDecimal newTotalAmount = BigDecimal.valueOf(this.getItems()
                 .stream().map(CartItem::getQuantity)
-                .reduce(0, Integer::sum)));
+                .reduce(0, Integer::sum));
+        setTotalAmount(newTotalAmount);
+        return newTotalAmount;
     }
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 
