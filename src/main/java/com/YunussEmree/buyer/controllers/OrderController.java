@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/orders")
+@RequestMapping("${api.prefix}/orders")
 @RestController
 public class OrderController {
 
