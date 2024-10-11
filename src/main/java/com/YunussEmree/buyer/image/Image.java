@@ -15,6 +15,7 @@ import java.sql.Blob;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
