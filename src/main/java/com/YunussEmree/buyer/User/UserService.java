@@ -2,14 +2,17 @@ package com.yunussemree.buyer.user;
 
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public User saveUser(CreateUserRequest request) {
@@ -38,9 +41,20 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public void deleteUser(Long id) {
         userRepository.findById(id).ifPresentOrElse(userRepository::delete, () -> {
             throw new ResourceNotFoundException("User not found when delete user by id service!");
         });
     }
+
+    @Override
+    public UserDto convertToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
+
 }
