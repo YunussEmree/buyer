@@ -1,5 +1,7 @@
 package com.yunussemree.buyer.cart;
 
+import com.yunussemree.buyer.user.User;
+
 import java.math.BigDecimal;
 
 public interface ICartService {
@@ -7,5 +9,5 @@ public interface ICartService {
     Cart getCartById(Long id);
     void clearCart(Long id);
     BigDecimal getTotalPrice(Long cartId);
-    Long createCart();
+    Cart createCart(User user);
 }

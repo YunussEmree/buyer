@@ -1,8 +1,11 @@
 package com.yunussemree.buyer.controllers;
 
-import com.yunussemree.buyer.cart.ICartService;
+import com.yunussemree.buyer.cart.Cart;
+import com.yunussemree.buyer.cart.CartService;
 import com.yunussemree.buyer.cartitem.ICartItemService;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.user.IUserService;
+import com.yunussemree.buyer.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,22 +14,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("${api.prefix}/cart-item")
 public class CartItemController {
     private final ICartItemService iCartItemService;
-    private final ICartService iCartService;
+    private final IUserService iUserService;
+    private final CartService cartService;
 
     @Autowired
-    public CartItemController(ICartItemService iCartItemService, ICartService iCartService) {
+    public CartItemController(ICartItemService iCartItemService, IUserService iUserService, CartService cartService) {
         this.iCartItemService = iCartItemService;
-        this.iCartService = iCartService;
-
+        this.iUserService = iUserService;
+        this.cartService = cartService;
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> addCartItem(@RequestParam(required = false) Long cartId, @RequestParam Long productId, @RequestParam int quantity) {
+    public ResponseEntity<ApiResponse> addCartItem(@RequestParam Long productId, @RequestParam int quantity) {
         try{
-            if(cartId == null){
-                cartId = iCartService.createCart();
-            }
-            iCartItemService.addCartItem(cartId, productId, quantity);
+            User user = iUserService.getUserById(1L);
+            Cart cart = cartService.createCart(user);
+            iCartItemService.addCartItem(cart.getId(), productId, quantity);
             return ResponseEntity.ok(new ApiResponse("Cart item added successfully", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(new ApiResponse("Cart not found for add cart item request!", null));
