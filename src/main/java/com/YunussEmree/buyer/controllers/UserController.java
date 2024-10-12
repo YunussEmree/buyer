@@ -3,10 +3,10 @@ package com.yunussemree.buyer.controllers;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.yunussemree.buyer.user.*;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("${api.prefix}/users")
@@ -23,13 +23,13 @@ public class UserController {
     public ResponseEntity<ApiResponse> getUsers() {
         try {
             List<User> users = userService.getUsers();
-            List<UserDto> userDtos = null;
+            List<UserDto> userDtos = new ArrayList<>();
             for (User user : users) {
                  userDtos.add(userService.convertToDto(user));
             }
             return ResponseEntity.ok(new ApiResponse("Success for get users request", userDtos));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse("An error occured", e.getMessage()));
+            return ResponseEntity.badRequest().body(new ApiResponse("An error occured when getting users", e.getMessage()));
         }
     }
 
@@ -40,7 +40,7 @@ public class UserController {
             UserDto userDto = userService.convertToDto(user);
             return ResponseEntity.ok(new ApiResponse("Success for get user by id request", userDto));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse("An error occured", e.getMessage()));
+            return ResponseEntity.badRequest().body(new ApiResponse("An error occured when getting user by id", e.getMessage()));
         }
     }
 
@@ -53,7 +53,7 @@ public class UserController {
         } catch (ResourceAlreadyExistsException e) {
             return ResponseEntity.status(409).body(new ApiResponse("Resource already exists when create user request", null));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse("An error occured", e.getMessage()));
+            return ResponseEntity.badRequest().body(new ApiResponse("An error occured when saving user", e.getMessage()));
         }
     }
 
@@ -66,7 +66,7 @@ public class UserController {
         } catch (ResourceNotFoundException e){
             return ResponseEntity.status(404).body(new ApiResponse("User not found when update user request", null));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse("An error occured", e.getMessage()));
+            return ResponseEntity.badRequest().body(new ApiResponse("An error occured when updating user", e.getMessage()));
         }
     }
 
@@ -78,7 +78,7 @@ public class UserController {
         } catch (ResourceNotFoundException e){
             return ResponseEntity.status(404).body(new ApiResponse("User not found when delete user request", null));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse("An error occured", e.getMessage()));
+            return ResponseEntity.badRequest().body(new ApiResponse("An error occured when deleting user", e.getMessage()));
         }
     }
 
