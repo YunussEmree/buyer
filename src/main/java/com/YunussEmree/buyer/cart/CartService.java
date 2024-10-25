@@ -1,9 +1,11 @@
 package com.yunussemree.buyer.cart;
 
+import com.yunussemree.buyer.cartitem.CartItemRepository;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.yunussemree.buyer.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CartService implements ICartService{
 
+    private final CartItemRepository cartItemRepository;
     private CartRepository cartRepository;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public CartService(CartRepository cartRepository){
+    public CartService(CartRepository cartRepository, CartItemRepository cartItemRepository){
         this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
 
@@ -40,10 +45,14 @@ public class CartService implements ICartService{
     @Override
     public void clearCart(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found when clear cart service!"));
+
+
+
+        cartItemRepository.deleteAllByCartId(id);
         cart.getItems().clear();
         cart.setTotalAmount(BigDecimal.ZERO);
         cart.setTotalPrice(BigDecimal.ZERO);
-        cartRepository.save(cart);
+        cartRepository.deleteById(id);
     }
 
     @Override
@@ -61,6 +70,10 @@ public class CartService implements ICartService{
                 });
     }
 
+    @Override
+    public CartDto convertToDto(Cart cart){
+        return modelMapper.map(cart, CartDto.class);
+    }
 
 
 

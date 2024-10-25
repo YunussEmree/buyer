@@ -25,23 +25,34 @@ public class ProductService implements IProductService {
 
 
     @Override
-    public Product addProduct(Product product) {
-        //check the category, is it found in DB?
-        // If yes, set it as the new product category
-        // If no, then save it as a new category
-        //Then set a new product
+    public Product addProduct(AddProductRequest request) {
+        if (isProductExists(request.getName(), request.getBrand())) {
+            throw new ResourceAlreadyExistsException(request.getBrand() + " "
+                    + request.getName() + " already exists, you may update this product instead!");
+        }
+        Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
+                .orElseGet(() -> {
+                    Category newCategory = new Category(request.getCategory().getName());
+                    return categoryRepository.save(newCategory);
+                });
+        request.setCategory(category);
+        return productRepository.save(createProduct(request, category));
+    }
 
 
+    private boolean isProductExists(String name, String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
+    }
 
-        Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName())).ifPresentOrElse(product::setCategory, () -> {
-            Category newCategory = new Category();
-            newCategory.setName(product.getCategory().getName());
-            product.setCategory(categoryRepository.save(newCategory));
-        });
-
-        return Optional.of(product).filter(p -> !productRepository.existsByName(p.getName()))
-                .map(productRepository::save)
-                .orElseThrow(() -> new ResourceAlreadyExistsException("Product already exists when add product by id service!"));
+    private Product createProduct(AddProductRequest request, Category category) {
+        return new Product(
+                request.getName(),
+                request.getBrand(),
+                request.getDescription(),
+                request.getPrice(),
+                request.getInventory(),
+                category
+        );
     }
 
     @Override
