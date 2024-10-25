@@ -14,16 +14,16 @@ import java.util.List;
 @RestController
 public class OrderController {
 
-    private final IOrderService iOrderService;
+    private final IOrderService orderService;
 
-    public OrderController(IOrderService iOrderService) {
-        this.iOrderService = iOrderService;
+    public OrderController(IOrderService orderService) {
+        this.orderService = orderService;
     }
 
     @GetMapping("/{userId}/all")
     public ResponseEntity<ApiResponse> getOrders(@PathVariable Long userId) {
         try{
-            List<OrderDto> orders = iOrderService.getUserOrders(userId);
+            List<OrderDto> orders = orderService.getUserOrders(userId);
             return ResponseEntity.ok(new ApiResponse("Get all orders request success!", orders));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), null));
@@ -33,7 +33,7 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<ApiResponse> getOrder(@PathVariable Long orderId) {
         try{
-            OrderDto order = iOrderService.getOrderById(orderId);
+            OrderDto order = orderService.getOrderById(orderId);
             return ResponseEntity.ok(new ApiResponse("Get order request success!", order));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), null));
@@ -43,7 +43,7 @@ public class OrderController {
     @DeleteMapping("/{orderId}")
     public ResponseEntity<ApiResponse> cancelOrder(@PathVariable Long orderId) {
         try{
-            iOrderService.cancelOrder(orderId);
+            orderService.cancelOrder(orderId);
             return ResponseEntity.ok(new ApiResponse("Order cancelled successfully!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), null));
@@ -53,8 +53,9 @@ public class OrderController {
     @PostMapping("/{userId}")
     public ResponseEntity<ApiResponse> placeOrder(@PathVariable Long userId) {
         try{
-            Order order = iOrderService.placeOrder(userId);
-            return ResponseEntity.ok(new ApiResponse("Order placed successfully!", order));
+            Order order = orderService.placeOrder(userId);
+            OrderDto orderDto =  orderService.convertToDto(order);
+            return ResponseEntity.ok(new ApiResponse("Order placed successfully!", orderDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("An error occured", e.getMessage()));
         }

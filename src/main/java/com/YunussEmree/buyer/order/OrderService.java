@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -88,7 +87,8 @@ public class OrderService implements IOrderService{
         return orderRepository.findAllByUserId(userId).stream().map(this::convertToDto).toList();
     }
 
-    private OrderDto convertToDto(Order order){
+    @Override
+    public OrderDto convertToDto(Order order){
         return modelMapper.map(order, OrderDto.class);
     }
 }

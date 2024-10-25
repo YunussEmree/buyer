@@ -7,4 +7,6 @@ public interface IOrderService {
     OrderDto getOrderById(Long orderId);
     void cancelOrder(Long orderId);
     List<OrderDto> getUserOrders(Long userId);
+
+    OrderDto convertToDto(Order order);
 }

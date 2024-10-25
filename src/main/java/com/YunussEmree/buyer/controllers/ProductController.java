@@ -2,6 +2,7 @@ package com.yunussemree.buyer.controllers;
 
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
+import com.yunussemree.buyer.product.AddProductRequest;
 import com.yunussemree.buyer.product.IProductService;
 import com.yunussemree.buyer.product.Product;
 import com.yunussemree.buyer.product.ProductDto;
@@ -44,9 +45,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ApiResponse> createProduct(@RequestBody AddProductRequest request) {
         try{
-            Product theProduct = productService.addProduct(product); //TODO Will be used DTO
+            Product theProduct = productService.addProduct(request); //TODO Will be used DTO
             return ResponseEntity.ok(new ApiResponse("Success for create product request", theProduct));
         } catch (ResourceAlreadyExistsException e){
             return ResponseEntity.status(409).body(new ApiResponse("Resource already exists when create product request", null));
