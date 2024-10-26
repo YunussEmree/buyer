@@ -1,9 +1,7 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.image;
 
+import com.yunussemree.buyer.utils.api.ApiResponse;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.yunussemree.buyer.image.IImageService;
-import com.yunussemree.buyer.image.Image;
-import com.yunussemree.buyer.image.ImageDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

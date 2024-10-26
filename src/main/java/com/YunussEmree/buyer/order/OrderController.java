@@ -1,9 +1,7 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.order;
 
+import com.yunussemree.buyer.utils.api.ApiResponse;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.yunussemree.buyer.order.IOrderService;
-import com.yunussemree.buyer.order.Order;
-import com.yunussemree.buyer.order.OrderDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
