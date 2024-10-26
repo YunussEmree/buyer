@@ -1,7 +1,6 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.category;
 
-import com.yunussemree.buyer.category.Category;
-import com.yunussemree.buyer.category.ICategoryService;
+import com.yunussemree.buyer.utils.api.ApiResponse;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

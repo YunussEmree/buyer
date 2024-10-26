@@ -1,8 +1,8 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.user;
 
+import com.yunussemree.buyer.utils.api.ApiResponse;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.yunussemree.buyer.user.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

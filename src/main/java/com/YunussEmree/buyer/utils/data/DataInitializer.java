@@ -1,4 +1,4 @@
-package com.yunussemree.buyer.data;
+package com.yunussemree.buyer.utils.data;
 
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
 import com.yunussemree.buyer.role.Role;

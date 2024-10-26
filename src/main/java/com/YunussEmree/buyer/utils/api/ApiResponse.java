@@ -1,4 +1,4 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.utils.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,11 +1,8 @@
-package com.yunussemree.buyer.controllers;
+package com.yunussemree.buyer.product;
 
+import com.yunussemree.buyer.utils.api.ApiResponse;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceAlreadyExistsException;
 import com.yunussemree.buyer.core.utilities.exceptions.ResourceNotFoundException;
-import com.yunussemree.buyer.product.AddProductRequest;
-import com.yunussemree.buyer.product.IProductService;
-import com.yunussemree.buyer.product.Product;
-import com.yunussemree.buyer.product.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
