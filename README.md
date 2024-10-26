@@ -1,5 +1,5 @@
 # buyer
-A fullstack shopping card project with Spring Boot + Reactjs
+A fullstack shopping card project with Spring Boot
 
 # Used Technologies, Designs and Principles
 Spring Boot Core <br>
