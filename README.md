@@ -1,3 +1,4 @@
+
 # buyer
 A backend shopping card project with Spring Boot
 
@@ -40,3 +41,11 @@ Clean Code Principles <br>
 <p> /api/v1/orders/{orderId}/all               -    GET Request    -   Get spesific order</p>
 <p> /api/v1/orders/{userId}                    -    POST  Request  -   Place order</p>
 <p> /api/v1/orders/{orderId}                   -    Delete Request -   Cancel the order</p>
+<br>
+<p> /api/v1/users                              -    GET Request    -   Get all users info</p>
+<p> /api/v1/users/{userId}                     -    GET Request    -   Get user with id</p>
+<p> /api/v1/users/{userId}                     -    POST  Request  -   Create a new user</p>
+<p> /api/v1/users/{userId}                     -    PUT  Request   -   Update the user</p>
+<p> /api/v1/users/{orderId}                    -    Delete Request -   Delete the user</p>
+<br>
+<p> /api/v1/auth/login                         -    POST Request   -   Login</p>
