@@ -3,15 +3,15 @@
 A backend shopping card project with Spring Boot
 
 # Used Technologies, Designs and Principles
-Spring Boot Core <br>
-Spring Boot Web <br>
-Spring Boot JPA <br>
-Spring Boot Security<br>
+Spring Core <br>
+Spring Web <br>
+Spring Data JPA <br>
+Spring Security<br>
 Jwt-Login<br>
 Hibernate<br>
 Lombok <br>
 Postgresql <br>
-Domain Driven Design for much more code understanding <br>
+Domain Driven Design<br>
 Clean Code Principles <br>
 
 # Api Endpoints
