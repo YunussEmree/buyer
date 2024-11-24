@@ -1,6 +1,7 @@
 
 # buyer
 A backend shopping card project with Spring Boot
+Swagger ui link: http://localhost:8080/swagger-ui/index.html
 
 # Used Technologies, Designs and Principles
 Spring Core <br>
